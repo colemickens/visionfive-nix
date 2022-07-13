@@ -1,10 +1,5 @@
 { config, pkgs, lib, ... }:
-
 {
-  imports = [
-    ./quirks.nix
-  ];
-  config = {
   # Remove ZFS
   boot.supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" "ext4" "vfat" ];
 
@@ -47,6 +42,5 @@
         "wheel"
       ];
     };
-  };
   };
 }
