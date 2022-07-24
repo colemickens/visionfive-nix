@@ -1,7 +1,7 @@
 # Flashing the Bootloader
 
 1. Do not apply power to the board
-2. Attach the board via serial to your system, ensuring power is still not applied
+2. Attach the board via serial to your system, ensuring power is still not applied (use pins 6,8,10 as GND,GPIO14-TX,GPIO13-RX, do not use the broken out UART header for this)
 3. Ensure the serial shows up in `/dev/ttyUSB*`, you can see this by running `dmesg` after plugging in the device
 
    ```
@@ -27,6 +27,13 @@
    ### Apply power to the VisionFive Board ###
    ```
    Once power is applied, picocom will send the OpenSBI/U-Boot payload via XMODEM. You can then flash NixOS or any other distribution that follows the Distro Boot specification[^1] to an SD card and boot it.
+
+# Recovering the StarFive Built-in Firmware
+
+This will restore the default StarFive firmware, which will then allow to re-wire your UART setup and then follow the above section.
+The same steps as above are roughly used, with these changes:
+ - execute `nix run .#flashOriginal /dev/ttyUSBX`
+ - wire the serial connection from your computer to the broken out UART header on the VisionFive
 
 ###### Why do I need to flash the bootloader?
 

@@ -34,16 +34,8 @@
       ];
     in
     {
-      # Cole's vision:
-      # package kernel, uboot, firmware in this repo
-      # don't rely on custom nixpkgs
-      # user supplies riscv-patched packages (for now?)
-      # or we can supply THOSE as an optional overlay used in `quirks.nix`
       overlay = final: prev: {
-        linuxPackages_visionfive = final.linuxPackagesFor ((final.callPackage ./pkgs/kernel.nix { inherit vendor-kernel; }).override { patches = []; });
-      };
-      packages = {
-        linuxPackages_visionfive = pkgs.linuxPackages_visionfive;
+        linuxPackages_visionfive = final.linuxPackagesFor ((final.callPackage ./kernel.nix { inherit vendor-kernel; }).override { patches = []; });
       };
       legacyPackages.${system} =
         {
@@ -115,12 +107,18 @@
       packages.${system} = {
         jh7100-recover = pkgs.writeCBin "jh7100-recover" (builtins.readFile "${jh71xx-tools}/jh7100-recover.c");
       };
+      images = {
+        visionfive-cross = self.nixosConfigurations.visionfive-cross.config.system.build.sdImage;
+        visionfive-native = self.nixosConfigurations.visionfive-native.config.system.build.sdImage;
+      };
       nixosModules = {
-        visionfive = ./modules/visionfive.nix;
-        demo-user = ./modules/demo-user.nix;
-        sdcard = ./modules/sdcard.nix;
-        riscv-cross-quirks = ./modules/riscv-cross-quirks.nix;
-       };
+        quirks = ./quirks.nix;
+        sdcard = ({modulesPath, ...}: {
+          imports = [ "${modulesPath}/nixos/modules/installer/sd-card/sd-image-riscv64-visionfive-installer.nix" ];
+        });
+        # TODO: update below to use these, move images below nixosConfigurations since they naturally
+        # follow from the nixosConfig themselves
+      };
       nixosConfigurations = {
         visionfive-cross = nixpkgs.lib.nixosSystem {
           system = "${system}";
@@ -136,10 +134,6 @@
           system = "riscv64-linux";
           modules = modules;
         };
-      };
-      images = {
-        visionfive-cross = self.nixosConfigurations.visionfive-cross.config.system.build.sdImage;
-        visionfive-native = self.nixosConfigurations.visionfive-native.config.system.build.sdImage;
       };
     };
 }
