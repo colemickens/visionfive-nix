@@ -24,8 +24,8 @@ in buildLinux (args // {
 
   kernelPatches = [];
 
-  # defconfig = "starfive_jh7100_fedora_defconfig";
-  defconfig = "visionfive_defconfig";
+  defconfig = "starfive_jh7100_fedora_defconfig";
+  # defconfig = "visionfive_defconfig";
 
   # are any of these needed? which base defconfig will be upstreamed?
   structuredExtraConfig = with lib.kernel; {
@@ -43,7 +43,7 @@ in buildLinux (args // {
     # STMMAC_PCI = yes; # uh I don't think it has PCI?
      
     # build in the rest of the ethernet support
-    # MOTORCOMM_PHY = yes;
+    MOTORCOMM_PHY = yes;
   };
 
   extraMeta = {
