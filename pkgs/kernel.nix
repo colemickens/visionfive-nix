@@ -37,7 +37,11 @@ in buildLinux (args // {
     # stmmac hangs when built as a module
     PTP_1588_CLOCK = yes;
     STMMAC_ETH = yes;
-    STMMAC_PCI = yes;
+    STMMAC_PLATFORM = yes;
+    # STMMAC_PCI = yes; # uh I don't think it has PCI?
+     
+    # build in the rest of the ethernet support
+    MOTORCOMM_PHY = yes;
   };
 
   extraMeta = {
