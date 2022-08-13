@@ -1,6 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:matthewcroughan/nixpkgs/mc/riscv-testing";
+    # nixpkgs.url = "github:matthewcroughan/nixpkgs/mc/riscv-testing";
+    nixpkgs.url = "github:colemickens/nixpkgs/cmpkgs-cross-riscv64";
     vendor-kernel = {
       url = "github:starfive-tech/linux";
       flake = false;
@@ -42,9 +43,6 @@
       overlay = final: prev: {
         linuxPackages_visionfive = final.linuxPackagesFor ((final.callPackage ./pkgs/kernel.nix { inherit vendor-kernel; }).override { patches = []; });
       };
-      packages = {
-        linuxPackages_visionfive = pkgs.linuxPackages_visionfive;
-      };
       legacyPackages.${system} =
         {
           # TODO: this seems a bit weird, will do a cross-compile even on riscv64 (though I realize this isn't likely use-case)
@@ -81,6 +79,7 @@
                 echo "User is not in dialout group, flashing to board with sudo"
                 sudo ${expectScript} $1
               fi
+              sudo picocom -b 115200 $1
             '';
           in
           {
@@ -113,7 +112,11 @@
           };
         };
       packages.${system} = {
+        # neither is this really tho
         jh7100-recover = pkgs.writeCBin "jh7100-recover" (builtins.readFile "${jh71xx-tools}/jh7100-recover.c");
+        
+        # This is.. not sound
+        firmware-visionfive = pkgs.pkgsCross.riscv64.firmware-visionfive;
       };
       nixosModules = {
         visionfive = ./modules/visionfive.nix;

@@ -4,7 +4,7 @@
 2. Attach the board via serial to your system, ensuring power is still not applied (use pins 6,8,10 as GND,GPIO14-TX,GPIO13-RX, do not use the broken out UART header for this)
 3. Ensure the serial shows up in `/dev/ttyUSB*`, you can see this by running `dmesg` after plugging in the device
 
-   ```
+   ```console
    ❯ dmesg
    [200199.253566] usb 1-2: new full-speed USB device number 79 using xhci_hcd
    [200199.386983] usb 1-2: New USB device found, idVendor=0403, idProduct=6001, bcdDevice= 6.00
@@ -19,7 +19,11 @@
                                                                              ^ This becomes /dev/ttyUSB0
    ```
 
-4. `nix run github:matthewcroughan/visionfive-nix#flashBootloader /dev/ttyUSB0`
+4. Run:
+   ```bash
+   nix run github:matthewcroughan/visionfive-nix#flashBootloader /dev/ttyUSB0
+   nix run .#flashBootloader /dev/ttyUSB0
+   ```
 5. Wait to be told to apply power to the board this may take a while as U-Boot and OpenSBI are being cross-compiled.
    ```
    Terminal ready

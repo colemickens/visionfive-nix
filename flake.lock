@@ -54,16 +54,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1657645802,
-        "narHash": "sha256-wd+LiuGtHP8mTIc0gZrO2yqzmEPVvh5IyWrB8WCQNKM=",
-        "owner": "matthewcroughan",
+        "lastModified": 1660234271,
+        "narHash": "sha256-Id/OCQOD+oimARX22xkoB2Y5vhHqtZHDt1rhL44R76Q=",
+        "owner": "colemickens",
         "repo": "nixpkgs",
-        "rev": "39a827f18b870afb02f6c0f09151c69f2d8e7a4d",
+        "rev": "bb5691a75df69d8935cf75ddf01457143c09f217",
         "type": "github"
       },
       "original": {
-        "owner": "matthewcroughan",
-        "ref": "mc/riscv-testing",
+        "owner": "colemickens",
+        "ref": "cmpkgs-cross-riscv64",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -81,11 +81,11 @@
     "vendor-kernel": {
       "flake": false,
       "locked": {
-        "lastModified": 1657526524,
-        "narHash": "sha256-NiEeWgYzEhqLbvB0krpjoRv8oXXsJYp6KeDor+f9tak=",
+        "lastModified": 1659367815,
+        "narHash": "sha256-OuyXh73TmWEKZAfUw4PwxiNH78rfxnLHNQeS3UbVweE=",
         "owner": "starfive-tech",
         "repo": "linux",
-        "rev": "74003f14f92e3c8eb31536b599c1f0c7aba3cdf2",
+        "rev": "4333f325dfcc11817be234d93fcc9ce7efb4203c",
         "type": "github"
       },
       "original": {
